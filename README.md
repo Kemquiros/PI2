@@ -3,18 +3,13 @@
 ## Título del proyecto
 Generación de listas de reproducción musical a partir de la identificación del estado de ánimo
 
-## Nombres de los estudiantes y tutor(es) del proyecto
 
 ### Ejecutores del proyecto
-John Edisson Tapias Zarrazola
-Correo electrónico: jedisson.tapias@udea.edu.co
 
-### Julián David Quiroz Arboleda
-Correo electrónico: julian.quiroz@udea.edu.co
+Función | Nombre | Contacto
+------------ | ------------- | -------------
+Tutor | Wilmer Alberto Gil Moreno | wilmer.gil@udea.edu,co
+Estudiante ejecutor | John Tapias Zarrazola | jedisson.tapias@udea.edu.co
+Estudiante ejecutor | Julián David Quiroz Arboleda | julian.quiroz@udea.edu.co
+Estudiante ejecutor | Sergio Iván Loaiza Pérez | sivan.loaiza@udea.edu.co
 
-### Sergio Iván Loaiza Pérez
-Correo electrónico: sivan.loaiza@udea.edu.co
-
-### Tutor del proyecto 
-Wilmer Alberto Gil Moreno
-Correo electrónico: wilmer.gil@udea.edu,co
