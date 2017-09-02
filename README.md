@@ -1,1 +1,1 @@
-# Integro Wordpress Theme
+# Proyecto Integrador II - 2017/02
