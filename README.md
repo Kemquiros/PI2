@@ -1,15 +1,30 @@
-# Proyecto Integrador II - 2017/02
+# mp7
 
-## Título del proyecto
-Generación de listas de reproducción musical a partir de la identificación del estado de ánimo
+> A Vue.js project
 
+## Build Setup
 
-### Ejecutores del proyecto
+``` bash
+# install dependencies
+npm install
 
-Función | Nombre | Contacto
------------- | ------------- | -------------
-Tutor | Wilmer Alberto Gil Moreno | wilmer.gil@udea.edu.co
-Estudiante ejecutor | John Tapias Zarrazola | jedisson.tapias@udea.edu.co
-Estudiante ejecutor | Julián David Quiroz Arboleda | julian.quiroz@udea.edu.co
-Estudiante ejecutor | Sergio Iván Loaiza Pérez | sivan.loaiza@udea.edu.co
+# serve with hot reload at localhost:8080
+npm run dev
 
+# build for production with minification
+npm run build
+
+# build for production and view the bundle analyzer report
+npm run build --report
+
+# run unit tests
+npm run unit
+
+# run e2e tests
+npm run e2e
+
+# run all tests
+npm test
+```
+
+For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
