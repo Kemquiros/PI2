@@ -1,33 +1,33 @@
 <template>
-  <div class="login">
-    <h1>Iniciar Sesión</h1>
+  <div class="signup">
+    <h1>Regístrese</h1>
       <b-form @submit="onSubmit">
-        <b-form-group id="usuarioGroup"
-                      label="Usuario" label-for="usuario">
-          <b-form-input id="usuario"
+        <b-form-group id="userGroup"
+                      label="Usuario" label-for="user">
+          <b-form-input id="user"
                         type="text" required
                         placeholder="Ingrese su usuario"
           ></b-form-input>
         </b-form-group><br>
-        <b-form-group id="contraseñaGroup"
-                      label="Contraseña" label-for="contraseña">
-          <b-form-input id="contraseña"
+        <b-form-group id="passwordGroup"
+                      label="Contraseña" label-for="password">
+          <b-form-input id="password"
                         type="text" required
                         placeholder="Ingrese su contraseña"
           ></b-form-input>
         </b-form-group><br>
-        <b-button type="submit" variant="primary">Ingresar</b-button>
+        <b-button type="submit" variant="primary">Registrarse</b-button>
       </b-form>
   </div>
 </template>
 
 <script>
 export default {
-  data () {
+  data: function () {
     return {
       form: {
-        usuario: '',
-        contraseña: ''
+        user: '',
+        password: ''
       }
     }
   },

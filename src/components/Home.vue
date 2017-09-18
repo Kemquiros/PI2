@@ -4,7 +4,7 @@
     <h2>Música para tu estado de Animo</h2>
     <ul>
       <router-link to="/login" active-class="active"  tag="li"><a href="#">Iniciar Sesión</a></router-link>
-      <router-link to="/login" active-class="active"  tag="li"><a href="#" >Registrarse</a></router-link>
+      <router-link to="/signup" active-class="active"  tag="li"><a href="#" >Registrarse</a></router-link>
     </ul>
   </div>
 </template>
