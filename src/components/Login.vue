@@ -1,19 +1,22 @@
 <template>
   <div class="login">
     <h1>Iniciar Sesión</h1>
-      <b-form @submit="onSubmit">
-        <b-form-group id="usuarioGroup"
-                      label="Usuario" label-for="usuario">
-          <b-form-input id="usuario"
+      <b-form @submit="loginPost">
+        <b-form-group id="userGroup"
+                      label="Usuario" label-for="user">
+          <b-form-input id="user"
                         type="text" required
                         placeholder="Ingrese su usuario"
+                        v-model="postBody.usuario"
+                        :formatter="formatLowercase"
           ></b-form-input>
         </b-form-group><br>
-        <b-form-group id="contraseñaGroup"
-                      label="Contraseña" label-for="contraseña">
-          <b-form-input id="contraseña"
+        <b-form-group id="passwordGroup"
+                      label="Contraseña" label-for="password">
+          <b-form-input id="password"
                         type="text" required
                         placeholder="Ingrese su contraseña"
+                        v-model="postBody.clave"
           ></b-form-input>
         </b-form-group><br>
         <b-button type="submit" variant="primary">Ingresar</b-button>
@@ -22,19 +25,46 @@
 </template>
 
 <script>
+
+import axios from 'axios'
+import md5 from 'md5'
+import querystring from 'querystring'
+
 export default {
   data () {
     return {
-      form: {
+      postBody: {
         usuario: '',
-        contraseña: ''
-      }
+        clave: '',
+        tokenusuario: ''
+      },
+      errors: []
     }
   },
   methods: {
+    formatLowercase (value, event) {
+      return value.toLowerCase()
+    },
+    loginPost () {
+      const { usuario, clave, tokenusuario } = this.postBody
+      axios.post(`http://aidia-e.com/mp7radio_test/servicios/validar-usuario.php`,
+        querystring.stringify({
+          usuario: md5(usuario),
+          clave: md5(clave),
+          tokenusuario
+        })
+      )
+      .then(response => {
+        // JSON responses are automatically parsed.
+        console.log('response', response)
+      })
+      .catch(e => {
+        this.errors.push(e)
+      })
+    },
     onSubmit (evt) {
       evt.preventDefault()
-      alert(JSON.stringify(this.form))
+      alert(JSON.stringify(this.postBody))
     }
   }
 }
