@@ -29,6 +29,7 @@
 import axios from 'axios'
 import md5 from 'md5'
 import querystring from 'querystring'
+import router from '../router/index'
 
 export default {
   data () {
@@ -61,6 +62,7 @@ export default {
           sessionStorage.setItem('id', JSON.stringify(response.data.id))
           sessionStorage.setItem('name', JSON.stringify(response.data.nombre))
           sessionStorage.setItem('token', JSON.stringify(response.data.tokenusuario))
+          router.push('/welcome')
         } else {
           alert('Datos incorrectos.')
         }

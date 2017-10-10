@@ -1,10 +1,18 @@
 <template>
   <div class="welcome">
-    <h1>Bienvenido</h1>
+    <h1>Bienvenido {{name}}</h1>
   </div>
 </template>
 
-
+<script>
+export default {
+  data () {
+    return {
+      name: sessionStorage.getItem('name')
+    }
+  }
+}
+</script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
