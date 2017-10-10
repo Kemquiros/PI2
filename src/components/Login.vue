@@ -14,7 +14,7 @@
         <b-form-group id="passwordGroup"
                       label="Contraseña" label-for="password">
           <b-form-input id="password"
-                        type="text" required
+                        type="password" required
                         placeholder="Ingrese su contraseña"
                         v-model="postBody.clave"
           ></b-form-input>
