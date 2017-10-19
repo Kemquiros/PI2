@@ -10,11 +10,20 @@
 </template>
 
 <script>
+import router from '../router/index'
+
 export default {
   name: 'home',
   data () {
+    const token = localStorage.getItem('token')
+
+    if (token && token !== '') {
+      router.push('/index')
+    }
+
     return {
-      msg: 'Bienvenid@ a MP7'
+      msg: 'Bienvenid@ a MP7',
+      token
     }
   }
 }

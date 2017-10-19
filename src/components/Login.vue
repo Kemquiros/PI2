@@ -57,12 +57,11 @@ export default {
       )
       .then(response => {
         // JSON responses are automatically parsed.
-        console.log('response', response)
         if (response.data.success === true) {
-          sessionStorage.setItem('id', JSON.stringify(response.data.id))
-          sessionStorage.setItem('name', JSON.stringify(response.data.nombre))
-          sessionStorage.setItem('token', JSON.stringify(response.data.tokenusuario))
-          router.push('/welcome')
+          localStorage.setItem('id', JSON.stringify(response.data.id))
+          localStorage.setItem('name', JSON.stringify(response.data.nombre))
+          localStorage.setItem('token', JSON.stringify(response.data.tokenusuario))
+          router.push('/index')
         } else {
           alert('Datos incorrectos.')
         }
