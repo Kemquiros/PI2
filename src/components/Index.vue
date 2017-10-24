@@ -1,14 +1,14 @@
 <template>
   <div class="index">
     <h1>Bienvenido {{name}}</h1>
+    <Detector></Detector>
     <button v-on:click="onSignOut">Sign Out</button>
-    <p>Label Test</p>     
-
   </div>
 </template>
 
 <script>
 import router from '../router/index'
+import Detector from './Detector.vue'
 
 export default {
   data () {
@@ -27,7 +27,9 @@ export default {
     onSignOut: () => {
       localStorage.removeItem('token')
     }
-  }
+  },
+
+  components: {Detector}
 }
 </script>
 
