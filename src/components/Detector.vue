@@ -1,15 +1,19 @@
 <template>
   <div class="detector">
-    <video id="video" autoplay="true" v-bind:src="videoSrc"></video>
+    <video id="video" ref="video" autoplay="true" v-bind:src="videoSrc"></video>
     <br />
     <button id="snapButton" ref="snapButton" disabled="true" v-on:click="this.onSnapClick">Loading detector</button>
+    <br />
+    <canvas id="canvas" ref="canvas" width="0" height="0"></canvas>
   </div>
 </template>
 
 <script>
+/* global affdex */
 export default {
   data () {
     return {
+      detector: null,
       videoSrc: null
     }
   },
@@ -47,14 +51,46 @@ export default {
       }
     },
     startDetector: function () {
-      this.$refs.snapButton.innerHTML = 'Take Photo'
-      this.$refs.snapButton.disabled = false
+      const faceMode = affdex.FaceDetectorMode.SMALL_FACES
+      this.detector = new affdex.PhotoDetector(faceMode)
+      this.detector.detectAllEmotions()
+      this.detector.detectAllExpressions()
+
+      // Acciones cuando el detector de inicia correctamente o falla
+      this.detector.addEventListener('onInitializeSuccess', this.onInitializeSuccess)
+      this.detector.addEventListener('onInitializeFailure', () => {
+        this.handleError('initialize failed')
+      })
+
+      // Acciones cuando el detector procese la imagen correctamente o falla
+      this.detector.addEventListener('onImageResultsSuccess', this.onImageResultsSuccess)
+      this.detector.addEventListener('onImageResultsFailure', (image, timestamp, err) => {
+        this.handleError(err)
+      })
+
+      this.detector.start()
     },
     handleError: function (err) {
       console.log(err)
     },
     onSnapClick: function (e) {
-      console.log(e)
+      const { videoWidth, videoHeight } = this.$refs.video
+      const context = this.$refs.canvas.getContext('2d')
+      this.$refs.canvas.width = videoWidth
+      this.$refs.canvas.height = videoHeight
+      context.drawImage(this.$refs.video, 0, 0, videoWidth, videoHeight)
+      const imageData = context.getImageData(0, 0, videoWidth, videoHeight)
+
+      if (this.detector && this.detector.isRunning) {
+        this.detector.process(imageData, 0)
+      }
+    },
+    onInitializeSuccess: function () {
+      this.$refs.snapButton.innerHTML = 'Take Photo'
+      this.$refs.snapButton.disabled = false
+    },
+    onImageResultsSuccess: function (faces, image, timestamp) {
+      console.log(faces, image, timestamp)
     }
   }
 }
