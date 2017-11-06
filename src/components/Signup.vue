@@ -63,7 +63,7 @@ export default {
       return value.toLowerCase()
     },
     signupPost () {
-      axios.post(`http://aidia-e.com/mp7radio_test/servicios/registrar-usuario.php`,
+      axios.post(`https://aidia-e.com/mp7radio_test/servicios/registrar-usuario.php`,
         querystring.stringify({...this.postBody})
       )
       .then(response => { console.log(response) })

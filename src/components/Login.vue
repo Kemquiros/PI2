@@ -48,7 +48,7 @@ export default {
     },
     loginPost () {
       const { usuario, clave, tokenusuario } = this.postBody
-      axios.post(`http://aidia-e.com/mp7radio_test/servicios/validar-usuario.php`,
+      axios.post(`https://aidia-e.com/mp7radio_test/servicios/validar-usuario.php`,
         querystring.stringify({
           usuario: md5(usuario),
           clave: md5(clave),
