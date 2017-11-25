@@ -58,7 +58,7 @@ export default {
       .then(response => {
         // JSON responses are automatically parsed.
         if (response.data.success === true) {
-          localStorage.setItem('id', JSON.stringify(response.data.id))
+          localStorage.setItem('userId', JSON.stringify(response.data.id))
           localStorage.setItem('name', JSON.stringify(response.data.nombre))
           localStorage.setItem('token', JSON.stringify(response.data.tokenusuario))
           router.push('/index')

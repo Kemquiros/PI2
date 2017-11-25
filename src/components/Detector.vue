@@ -2,23 +2,25 @@
   <div class="detector">
     <video id="video" ref="video" autoplay="true" v-bind:src="videoSrc"></video>
     <br />
-    <button id="snapButton" ref="snapButton" disabled="true" v-on:click="this.onSnapClick">Loading detector</button>
+    <button id="snapButton" ref="snapButton" disabled="true" v-on:click="this.onSnapClick">{{snapButtonText}}</button>
     <br />
-    <canvas v-show="showCanvas" id="canvas" ref="canvas" v-bind:width="videoWidth" v-bind:height="videoHeight"></canvas>
+    <canvas class="canvas" v-show="showCanvas" id="canvas" ref="canvas" ></canvas>
     </div>
   </div>
 </template>
 
 <script>
 /* global affdex */
+import axios from 'axios'
+import querystring from 'querystring'
+
 export default {
   data () {
     return {
       detector: null,
       videoSrc: null,
-      showCanvas: false,
-      videoWidth: 0,
-      videoHeight: 0
+      snapButtonText: 'Loading detector',
+      showCanvas: false
     }
   },
 
@@ -80,8 +82,8 @@ export default {
     onSnapClick: function (e) {
       const { videoWidth, videoHeight } = this.$refs.video
 
-      this.videoWidth = videoWidth
-      this.videoHeight = videoHeight
+      this.$refs.canvas.width = videoWidth
+      this.$refs.canvas.height = videoHeight
       this.showCanvas = true
 
       const context = this.$refs.canvas.getContext('2d')
@@ -93,12 +95,13 @@ export default {
       }
     },
     onInitializeSuccess: function () {
-      this.$refs.snapButton.innerHTML = 'Take Photo'
+      this.snapButtonText = 'Take Photo'
       this.$refs.snapButton.disabled = false
     },
     onImageResultsSuccess: function (faces, image, timestamp) {
       const emotion = this.getEmotion(faces)
-      console.log(emotion)
+      console.log('emotion', emotion)
+      this.getSongList(emotion).then((list) => this.$emit('songListGot', list))
     },
     getEmotion: function (faces) {
       // Si se detectó al menos una cara
@@ -127,31 +130,74 @@ export default {
 
       if (higherEmotion.level >= 1) {
         switch (higherEmotion.emotion) {
+          /* 0 - Neutral
+          1 - Tristeza
+          2 - Alegría
+          3 - Otro
+          */
+
           case 'joy': {
-            return 'alegría'
+            console.log('joy')
+            return 2
           }
           case 'sadness': {
-            return 'tristeza'
+            console.log('sadness')
+            return 1
           }
           case 'disgust': {
-            return 'disgusto'
+            console.log('disgust')
+            return 1
           }
           case 'contempt': {
-            return 'contemplacion'
+            console.log('contempt')
+            return 1
           }
           case 'anger': {
-            return 'enojo'
+            console.log('anger')
+            return 3
           }
           case 'fear': {
-            return 'miedo'
+            console.log('fear')
+            return 3
           }
           case 'surprise': {
-            return 'sorpresa'
+            console.log('surprise')
+            return 3
           }
         }
       }
 
-      return 'neutra'
+      return 3
+    },
+    getSongList: async function (emotion, size = 10) {
+      const list = []
+      for (let i = 0; i < size; i += 1) {
+        await this.getNextTrack(emotion)
+          .then((data) => list.push(data))
+          .catch((e) => this.handleError(e))
+      }
+
+      return list
+    },
+    getNextTrack: async function (emotion) {
+      const userId = JSON.parse(localStorage.getItem('userId'))
+
+      try {
+        const response = await axios.post(`https://ludifica.com/mp7radio_test/servicios/seleccionar-audio.php`,
+          querystring.stringify({
+            idUsuario: userId,
+            idEstadoAnimo: emotion,
+            generos: '',
+            idAudio: 0,
+            nroCanciones: 0,
+            tiempo: 0
+          })
+        )
+
+        return response.data
+      } catch (e) {
+        return e
+      }
     }
   }
 }
@@ -159,6 +205,15 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.detector {
+  float: left;
+  width: 50%;
+}
+.canvas {
+  width: 20%;
+  height: 20%;
+}
+
 h1,
 h2 {
   font-weight: normal;

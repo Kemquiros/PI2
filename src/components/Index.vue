@@ -1,35 +1,42 @@
 <template>
   <div class="index">
-    <h1>Bienvenido {{name}}</h1>
-    <Detector></Detector>
-    <button v-on:click="onSignOut">Sign Out</button>
+      <h1>Bienvenido {{name}}</h1>
+      <div><button v-on:click="onSignOut">Sign Out</button></div>
+      <Detector v-on:songListGot="onSongListGot"></Detector>
+      <Player v-bind:list="this.songList"></Player>
   </div>
 </template>
 
 <script>
 import router from '../router/index'
 import Detector from './Detector.vue'
+import Player from './Player.vue'
 
 export default {
   data () {
-    const token = localStorage.getItem('token')
+    const token = JSON.parse(localStorage.getItem('token'))
 
     if (!token || token === '') {
       router.push('/')
     }
 
     return {
-      name: localStorage.getItem('name')
+      name: JSON.parse(localStorage.getItem('name')),
+      songList: []
     }
   },
 
   methods: {
-    onSignOut: () => {
+    onSignOut: function () {
       localStorage.removeItem('token')
+      router.push('/')
+    },
+    onSongListGot: function (songList) {
+      this.songList = songList
     }
   },
 
-  components: {Detector}
+  components: { Detector, Player }
 }
 </script>
 
@@ -37,6 +44,7 @@ export default {
 <style scoped>
 h1, h2 {
   font-weight: normal;
+  margin-bottom: 0px;
 }
 
 a {
