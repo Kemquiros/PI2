@@ -4,6 +4,7 @@ import Home from '@/components/Home'
 import Login from '@/components/Login'
 import Signup from '@/components/Signup'
 import Index from '@/components/Index'
+import Settings from '@/components/Settings'
 
 Vue.use(Router)
 
@@ -25,6 +26,10 @@ export default new Router({
     {
       path: '/index',
       component: Index
+    },
+    {
+      path: '/settings',
+      component: Settings
     }
   ]
 })

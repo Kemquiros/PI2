@@ -69,10 +69,6 @@ export default {
       .catch(e => {
         this.errors.push(e)
       })
-    },
-    onSubmit (evt) {
-      evt.preventDefault()
-      alert(JSON.stringify(this.postBody))
     }
   }
 }

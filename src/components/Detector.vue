@@ -137,37 +137,46 @@ export default {
           */
 
           case 'joy': {
+            this.$emit('emotionGot', 'Alegría')
             console.log('joy')
             return 2
           }
           case 'sadness': {
+            this.$emit('emotionGot', 'Tristeza')
             console.log('sadness')
             return 1
           }
           case 'disgust': {
+            this.$emit('emotionGot', 'Disgusto')
             console.log('disgust')
             return 1
           }
           case 'contempt': {
+            this.$emit('emotionGot', 'Desprecio')
             console.log('contempt')
             return 1
           }
           case 'anger': {
+            this.$emit('emotionGot', 'Enojo')
             console.log('anger')
             return 3
           }
           case 'fear': {
+            this.$emit('emotionGot', 'Miedo')
             console.log('fear')
             return 3
           }
           case 'surprise': {
+            this.$emit('emotionGot', 'Sorpresa')
             console.log('surprise')
             return 3
           }
         }
       }
 
-      return 3
+      this.$emit('emotionGot', 'Neutra')
+      console.log('neutrum')
+      return 0
     },
     getSongList: async function (emotion, size = 10) {
       const list = []

@@ -1,9 +1,12 @@
 <template>
   <div class="index">
       <h1>Bienvenido {{name}}</h1>
-      <div><button v-on:click="onSignOut">Sign Out</button></div>
-      <Detector v-on:songListGot="onSongListGot"></Detector>
-      <Player v-bind:list="this.songList"></Player>
+      <div>
+        <router-link to="/settings" active-class="active"><a href="#">Preferencias</a></router-link>
+        <button v-on:click="onSignOut">Sign Out</button>
+      </div>
+      <Detector v-on:songListGot="onSongListGot" v-on:emotionGot="onEmotionGot"></Detector>
+      <Player v-bind:list="this.songList" v-bind:emotion="this.emotion"></Player>
   </div>
 </template>
 
@@ -22,7 +25,8 @@ export default {
 
     return {
       name: JSON.parse(localStorage.getItem('name')),
-      songList: []
+      songList: [],
+      emotion: ''
     }
   },
 
@@ -33,6 +37,9 @@ export default {
     },
     onSongListGot: function (songList) {
       this.songList = songList
+    },
+    onEmotionGot: function (emotion) {
+      this.emotion = emotion
     }
   },
 

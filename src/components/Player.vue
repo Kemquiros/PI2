@@ -1,29 +1,40 @@
 <template>
-  <div class="player" v-show="showPlayer">
-    <div v-for="song in list" v-bind:key="song.id" v-on:click="onSongClick($event, song)">
-        <p>{{song.grupoartista}} - {{song.titulo}}</p>
+  <div>
+    <div class="emotion" v-show="showEmotion">
+      <p>Emoción detectada</p>
+      <p v-html="emotion"></p>
     </div>
-    <audio id="audio" ref="audio" controls>
-      <source v-bind:src="mpegSrc" type="audio/mpeg">
-      Your browser does not support the audio element.
-    </audio>
+    <div class="player" v-show="showPlayer">
+      <div v-for="song in list" v-bind:key="song.id" v-on:click="onSongClick($event, song)">
+          <p>{{song.grupoartista}} - {{song.titulo}}</p>
+      </div>
+      <audio id="audio" ref="audio" controls>
+        <source v-bind:src="mpegSrc" type="audio/mpeg">
+        Your browser does not support the audio element.
+      </audio>
+    </div>
   </div>
 </template>
 
 <script>
 
 export default {
-  props: ['list'],
+  props: ['emotion', 'list'],
   data () {
     return {
       mpegSrc: 'https://aidia-e.com/mydj/musica/1/361.mp3',
       showPlayer: false,
+      showEmotion: false
     }
   },
 
   beforeUpdate () {
     if (this.list.length) {
       this.showPlayer = true
+    }
+
+    if (this.emotion !== '') {
+      this.showEmotion = true
     }
   },
 
